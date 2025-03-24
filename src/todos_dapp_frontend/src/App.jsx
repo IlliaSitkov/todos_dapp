@@ -1,15 +1,17 @@
-import { useState } from 'react';
-import { todos_dapp_backend } from 'declarations/todos_dapp_backend';
+import { useState } from "react";
+import { todos_dapp_backend } from "declarations/todos_dapp_backend";
 
 function App() {
-  const [greeting, setGreeting] = useState('');
+  const [greeting, setGreeting] = useState("");
+  const [notes, setNotes] = useState([]);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const name = event.target.elements.name.value;
-    todos_dapp_backend.greet(name).then((greeting) => {
-      setGreeting(greeting);
-    });
+    const greeting = await todos_dapp_backend.addNote(name);
+    console.log(greeting + " from backend");
+    const notes = await todos_dapp_backend.getNotes();
+    setNotes(notes);
     return false;
   }
 
@@ -24,6 +26,17 @@ function App() {
         <button type="submit">Click Me!</button>
       </form>
       <section id="greeting">{greeting}</section>
+      {notes.map((note, i) => (
+        <div key={i}>{note}</div>
+      ))}
+      <button
+        onClick={() => {
+          todos_dapp_backend.clearNotes();
+          setNotes([]);
+        }}
+      >
+        Remove Notes
+      </button>
     </main>
   );
 }
