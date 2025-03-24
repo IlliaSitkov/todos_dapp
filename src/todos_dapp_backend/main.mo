@@ -2,9 +2,9 @@ import Principal "mo:base/Principal";
 import Text "mo:base/Text";
 import Array "mo:base/Array";
 
-actor NotesCanister {
+actor TodosCanister {
     
-    type Note = {
+    type Todo = {
         id: Nat;
         text: Text;
         completed: Bool;
@@ -12,7 +12,7 @@ actor NotesCanister {
     type Category = {
         id: Nat;
         name: Text;
-        var notes: [Note];
+        var todos: [Todo];
     };
     type User = {
         id: Principal;
@@ -41,14 +41,14 @@ actor NotesCanister {
         });
     };
 
-    public shared ({ caller }) func getNotes(categoryId: Nat): async [Note] {
+    public shared ({ caller }) func getTodos(categoryId: Nat): async [Todo] {
         let user = findUser(caller);
         switch (user) {
             case (?foundUser) {
                 let category = findCategory(foundUser, categoryId);
                 switch (category) {
                     case (?foundCategory) {
-                        return foundCategory.notes;
+                        return foundCategory.todos;
                     };
                     case null {
                         return [];
@@ -61,15 +61,15 @@ actor NotesCanister {
         };
     };
 
-    public shared ({ caller }) func addNote(note: Text, categoryId: Nat): async () {
+    public shared ({ caller }) func addTodo(text: Text, categoryId: Nat): async () {
         let user = findUser(caller);
         switch (user) {
             case (?foundUser) {
                 let category = findCategory(foundUser, categoryId);
                 switch (category) {
                     case (?foundCategory) {
-                        let newNotes = Array.append<Note>(foundCategory.notes, [{ id = await generateId(); text = note; completed = false }]);
-                        foundCategory.notes := newNotes;
+                        let newTodos = Array.append<Todo>(foundCategory.todos, [{ id = await generateId(); text = text; completed = false }]);
+                        foundCategory.todos := newTodos;
                     };
                     case null {
                         return;
@@ -83,21 +83,21 @@ actor NotesCanister {
     };
 
 
-    public shared ({ caller }) func updateNote(note: Text, categoryId: Nat, noteId: Nat): async () {
+    public shared ({ caller }) func updateTodo(text: Text, categoryId: Nat, todoId: Nat): async () {
         let user = findUser(caller);
         switch (user) {
             case (?foundUser) {
                 let category = findCategory(foundUser, categoryId);
                 switch (category) {
                     case (?foundCategory) {
-                        let newNotes = Array.map<Note, Note>(foundCategory.notes, func (n) {
-                            if (n.id == noteId) {
-                                { id = n.id; text = note; completed = n.completed };
+                        let newTodos = Array.map<Todo, Todo>(foundCategory.todos, func (todo) {
+                            if (todo.id == todoId) {
+                                { id = todo.id; text = text; completed = todo.completed };
                             } else {
-                                n;
+                                todo;
                             };
                         });
-                        foundCategory.notes := newNotes;
+                        foundCategory.todos := newTodos;
                     };
                     case null {
                         return;
@@ -110,7 +110,7 @@ actor NotesCanister {
         };
     };
 
-    public shared ({ caller }) func toggleNote(categoryId: Nat, noteId: Nat): async () {
+    public shared ({ caller }) func toggleTodo(categoryId: Nat, todoId: Nat): async () {
         let userPrincipal = caller;
 
         let user = findUser(userPrincipal);
@@ -120,14 +120,14 @@ actor NotesCanister {
                 let category = findCategory(foundUser, categoryId);
                 switch (category) {
                     case (?foundCategory) {
-                        let newNotes = Array.map<Note, Note>(foundCategory.notes, func (n) {
-                            if (n.id == noteId) {
-                                { id = n.id; text = n.text; completed = not n.completed };
+                        let newTodos = Array.map<Todo, Todo>(foundCategory.todos, func (todo) {
+                            if (todo.id == todoId) {
+                                { id = todo.id; text = todo.text; completed = not todo.completed };
                             } else {
-                                n;
+                                todo;
                             };
                         });
-                        foundCategory.notes := newNotes;
+                        foundCategory.todos := newTodos;
                     };
                     case null {
                         return;
@@ -140,7 +140,7 @@ actor NotesCanister {
         };
     };
 
-    public shared ({ caller }) func deleteNote(categoryId: Nat, noteId: Nat): async () {
+    public shared ({ caller }) func deleteTodo(categoryId: Nat, todoId: Nat): async () {
         let userPrincipal = caller;
 
         let user = findUser(userPrincipal);
@@ -150,10 +150,10 @@ actor NotesCanister {
                 let category = findCategory(foundUser, categoryId);
                 switch (category) {
                     case (?foundCategory) {
-                        let newNotes = Array.filter<Note>(foundCategory.notes, func (n) {
-                            n.id != noteId;
+                        let newTodos = Array.filter<Todo>(foundCategory.todos, func (todo) {
+                            todo.id != todoId;
                         });
-                        foundCategory.notes := newNotes;
+                        foundCategory.todos := newTodos;
                     };
                     case null {
                         return;
@@ -186,11 +186,11 @@ actor NotesCanister {
         let user = findUser(userPrincipal);
         switch (user) {
             case (?foundUser) {
-                let newCategories = Array.append<Category>(foundUser.categories, [{ id = await generateId(); name = name; var notes = [] }]);
+                let newCategories = Array.append<Category>(foundUser.categories, [{ id = await generateId(); name = name; var todos = [] }]);
                 foundUser.categories := newCategories;
             };
             case null{
-                let newUser = { id = userPrincipal; var categories = [{ id = 0; name = name; var notes = ([] : [Note]) }] };
+                let newUser = { id = userPrincipal; var categories = [{ id = 0; name = name; var todos = ([] : [Todo]) }] };
                 userStorage := Array.append<User>(userStorage, [newUser]);
             }
         };
