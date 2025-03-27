@@ -10,9 +10,6 @@ const HeaderComponent = () => {
       <Link className="btn btn-primary" to="/">
         Categories
       </Link>
-      <Link className="btn btn-primary" to="/profile">
-        Profile
-      </Link>
     </div>
   );
 };
