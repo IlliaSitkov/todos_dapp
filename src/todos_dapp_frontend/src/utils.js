@@ -7,3 +7,7 @@ export const isEmpty = (obj) => {
     obj.length === 0
   );
 };
+
+export const changeHandler = (setValue) => (e) => {
+  setValue(e.target.value);
+};
