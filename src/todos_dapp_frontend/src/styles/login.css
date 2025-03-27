@@ -1,0 +1,36 @@
+
+
+div > label {
+    margin-bottom: 4px;
+}
+
+form * {
+    width: 100%;
+}
+
+form > div {
+    margin-bottom: 16px;
+}
+
+.note-card {
+    border-radius: 4px;
+    background-color: rgba(169, 169, 169, 0.11);
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.15);
+    padding: 8px 16px;
+}
+
+.inp-param {
+    width: 100px!important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
