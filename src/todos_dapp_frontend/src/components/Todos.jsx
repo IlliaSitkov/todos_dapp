@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { todos_dapp_backend } from "declarations/todos_dapp_backend";
 import { isEmpty } from "../utils";
+import Todo from "./Todo";
 
 const Todos = () => {
   const params = useParams();
@@ -35,18 +36,19 @@ const Todos = () => {
     } catch (error) {}
   };
 
+  console.log(todos);
+
   return (
     <div>
       <h1>
         Todos for <b>{category?.name}</b>
       </h1>
-      {isEmpty(todos) && <p>No Todos</p>}
-      {todos.map((todo) => (
-        <div key={todo.id}>
-          <p>{todo.text}</p>
-          <p>{todo.completed.toString()}</p>
-        </div>
-      ))}
+      <div className="d-flex flex-column gap-3 mt-4">
+        {isEmpty(todos) && <p>No Todos</p>}
+        {todos.map((todo) => (
+          <Todo key={todo.id} todo={todo} reload={loadTodos} />
+        ))}
+      </div>
     </div>
   );
 };

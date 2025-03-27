@@ -14,6 +14,7 @@ const MainComponent = () => {
           <Route index element={<Categories />} />
           <Route path="/categories/:categoryId/todos">
             <Route index element={<Todos />} />
+            <Route path=":todoId/edit" element={<div>Edit Todo</div>} />
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Route>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { todos_dapp_backend } from "declarations/todos_dapp_backend";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { LinkStyled } from "../styles/shared";
 
 const CategoryCard = styled.div`
   background-color: rgb(211, 211, 211);
@@ -23,11 +24,6 @@ const CategoryGrid = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: repeat(3, 1fr);
-`;
-
-const LinkStyled = styled(Link)`
-  text-decoration: none;
-  color: rgb(37, 32, 32);
 `;
 
 const Categories = () => {

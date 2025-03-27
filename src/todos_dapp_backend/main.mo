@@ -52,6 +52,28 @@ actor TodosCanister {
             }
         };
     };
+    
+    public shared ({ caller }) func getTodo(categoryId: Nat, todoId: Nat): async ?Todo {
+        let user = findUser(caller);
+        switch (user) {
+            case (?foundUser) {
+                let category = findCategory(foundUser, categoryId);
+                switch (category) {
+                    case (?foundCategory) {
+                        Array.find<Todo>(foundCategory.todos, func (todo) {
+                            todo.id == todoId;
+                        });
+                    };
+                    case null {
+                        null;
+                    }
+                };
+            };
+            case null{
+                null;
+            }
+        };
+    };
         
     public shared ({ caller }) func getTodos(categoryId: Nat): async [Todo] {
         let user = findUser(caller);
