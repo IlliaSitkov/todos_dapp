@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Categories from "./Categories";
 import Layout from "./Layout";
 import Todos from "./Todos";
+import EditTodo from "./EditTodo";
 
 const MainComponent = () => {
   return (
@@ -14,7 +15,7 @@ const MainComponent = () => {
           <Route index element={<Categories />} />
           <Route path="/categories/:categoryId/todos">
             <Route index element={<Todos />} />
-            <Route path=":todoId/edit" element={<div>Edit Todo</div>} />
+            <Route path=":todoId/edit" element={<EditTodo />} />
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Route>

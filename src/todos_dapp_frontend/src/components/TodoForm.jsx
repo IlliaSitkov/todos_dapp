@@ -1,8 +1,12 @@
-import { useState } from "react";
-import { changeHandler } from "../utils";
+import { useEffect, useState } from "react";
+import { changeHandler, isEmpty } from "../utils";
 
-const AddTodo = ({ onSave }) => {
-  const [text, setText] = useState("");
+const TodoForm = ({ onSave, title, initialValue = "" }) => {
+  const [text, setText] = useState(initialValue);
+
+  useEffect(() => {
+    setText(initialValue);
+  }, [initialValue]);
 
   const clearForm = () => setText("");
 
@@ -13,7 +17,7 @@ const AddTodo = ({ onSave }) => {
 
   return (
     <form onSubmit={handleSave} className="d-flex gap-3 flex-column mt-4">
-      <label htmlFor="text">Create New Todo</label>
+      {!isEmpty(title) && <label htmlFor="text">{title}</label>}
       <textarea
         value={text}
         onChange={changeHandler(setText)}
@@ -29,4 +33,4 @@ const AddTodo = ({ onSave }) => {
   );
 };
 
-export default AddTodo;
+export default TodoForm;

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { todos_dapp_backend } from "declarations/todos_dapp_backend";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { LinkStyled } from "../styles/shared";
 

@@ -3,7 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { todos_dapp_backend } from "declarations/todos_dapp_backend";
 import { isEmpty } from "../utils";
 import Todo from "./Todo";
-import AddTodo from "./AddTodo";
+import TodoForm from "./TodoForm";
 
 const Todos = () => {
   const params = useParams();
@@ -38,8 +38,8 @@ const Todos = () => {
   const createTodo = async (text, clearForm) => {
     try {
       await todos_dapp_backend.addTodo(text, categoryId);
+      await loadTodos();
       clearForm();
-      loadTodos();
     } catch (error) {}
   };
 
@@ -48,7 +48,7 @@ const Todos = () => {
       <h1>
         Todos for <b>{category?.name}</b>
       </h1>
-      <AddTodo onSave={createTodo} />
+      <TodoForm onSave={createTodo} title="Create New Todo" />
       <div className="d-flex flex-column gap-3 mt-4">
         {isEmpty(todos) && <p>No Todos</p>}
         {todos.map((todo) => (

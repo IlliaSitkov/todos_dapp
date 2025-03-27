@@ -35,7 +35,11 @@ const Todo = ({ todo, reload }) => {
     <TodoCard>
       <span>{todo.text}</span>
       <div className="d-flex gap-2">
-        <LinkStyled className="btn btn-warning" to={`${todo.id}/edit`}>
+        <LinkStyled
+          className="btn btn-warning"
+          to={`${todo.id}/edit`}
+          state={{ todo }}
+        >
           Edit
         </LinkStyled>
         {todo.completed ? (
