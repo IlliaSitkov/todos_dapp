@@ -1,59 +1,158 @@
-# `todos_dapp`
+The **ToDos DApp** is a decentralized application built on the Internet Computer (ICP) blockchain. It allows users to manage their tasks and categories in a secure and decentralized manner. Each user has their own set of categories and todos, which are stored securely on the blockchain and associated with their unique principal ID.
 
-Welcome to your new `todos_dapp` project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+## Features
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+- **User Authentication**: Each user is identified by their unique `Principal` ID.
+- **Category Management**:
+  - Add new categories.
+  - Retrieve all categories.
+  - Remove categories.
+  - Retrieve a category by id.
+- **Todo Management**:
+  - Add todos to specific categories.
+  - Retrieve todos from a category.
+  - Update todo text.
+  - Toggle todo completion status.
+  - Delete todos.
 
-To learn more before you start working with `todos_dapp`, see the following documentation available online:
+## Endpoints
 
-- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
-- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
-- [Motoko Programming Language Guide](https://internetcomputer.org/docs/current/motoko/main/motoko)
-- [Motoko Language Quick Reference](https://internetcomputer.org/docs/current/motoko/main/language-manual)
+### Category Endpoints
 
-If you want to start working on your project right away, you might want to try the following commands:
+1. **Get All Categories**
 
-```bash
-cd todos_dapp/
-dfx help
-dfx canister --help
+   - **Function**: `getCategories()`
+   - **Description**: Retrieves all categories for the authenticated user.
+   - **Returns**: An array of categories, each containing:
+     - `id`: The category ID.
+     - `name`: The category name.
+
+2. **Add Category**
+
+   - **Function**: `addCategory(name: Text)`
+   - **Description**: Adds a new category for the authenticated user.
+   - **Parameters**:
+     - `name`: The name of the category.
+
+3. **Remove Category**
+
+   - **Function**: `removeCategory(categoryId: Nat)`
+   - **Description**: Removes a category by its ID for the authenticated user.
+   - **Parameters**:
+     - `categoryId`: The ID of the category to remove.
+
+4. **Get Category**
+   - **Function**: `getCategory(categoryId: Nat)`
+   - **Description**: Retrieves a category by its id.
+   - **Parameters**:
+     - `categoryId`: The ID of the category to retrieve.
+
+---
+
+### Todo Endpoints
+
+1. **Get Todos**
+
+   - **Function**: `getTodos(categoryId: Nat)`
+   - **Description**: Retrieves all todos for a specific category.
+   - **Parameters**:
+     - `categoryId`: The ID of the category.
+   - **Returns**: An array of todos, each containing:
+     - `id`: The todo ID.
+     - `text`: The todo text.
+     - `completed`: A boolean indicating whether the todo is completed.
+
+2. **Get Todo**
+
+   - **Function**: `getTodo(categoryId: Nat, todoId: Nat)`
+   - **Description**: Retrieves a specific todo by its ID within a category.
+   - **Parameters**:
+     - `categoryId`: The ID of the category.
+     - `todoId`: The ID of the todo.
+   - **Returns**: The todo object if found, otherwise `null`.
+
+3. **Add Todo**
+
+   - **Function**: `addTodo(text: Text, categoryId: Nat)`
+   - **Description**: Adds a new todo to a specific category.
+   - **Parameters**:
+     - `text`: The text of the todo.
+     - `categoryId`: The ID of the category.
+
+4. **Update Todo**
+
+   - **Function**: `updateTodo(text: Text, categoryId: Nat, todoId: Nat)`
+   - **Description**: Updates the text of a specific todo.
+   - **Parameters**:
+     - `text`: The new text for the todo.
+     - `categoryId`: The ID of the category.
+     - `todoId`: The ID of the todo.
+
+5. **Toggle Todo Completion**
+
+   - **Function**: `toggleTodo(categoryId: Nat, todoId: Nat)`
+   - **Description**: Toggles the completion status of a specific todo.
+   - **Parameters**:
+     - `categoryId`: The ID of the category.
+     - `todoId`: The ID of the todo.
+
+6. **Delete Todo**
+   - **Function**: `deleteTodo(categoryId: Nat, todoId: Nat)`
+   - **Description**: Deletes a specific todo from a category.
+   - **Parameters**:
+     - `categoryId`: The ID of the category.
+     - `todoId`: The ID of the todo.
+
+---
+
+## How to Run the Application
+
+### Prerequisites
+
+- Install [Node.js](https://nodejs.org/) (v16 or later).
+- Install [dfx](https://internetcomputer.org/docs/building-apps/getting-started/quickstart) (The DFINITY SDK).
+
+### Setup
+
+In the project root directory:
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Start the local Internet Computer replica:
+
+   ```bash
+   dfx start
+   ```
+
+3. In a new terminal in the project root directory deploy canisters:
+
+   ```bash
+   dfx deploy
+   ```
+
+4. Access backend playground and frontend app via links provided in the console (examples):
+
+Frontend:
+
+```
+http://dfdal-2uaaa-aaaaa-qaama-cai.localhost:4943/
 ```
 
-## Running the project locally
+Backend:
 
-If you want to test your project locally, you can use the following commands:
-
-```bash
-# Starts the replica, running in the background
-dfx start --background
-
-# Deploys your canisters to the replica and generates your candid interface
-dfx deploy
+```
+http://127.0.0.1:4943/?canisterId=dccg7-xmaaa-aaaaa-qaamq-cai&id=cinef-v4aaa-aaaaa-qaalq-cai
 ```
 
-Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
+---
 
-If you have made changes to your backend canister, you can generate a new candid interface with
+## Project Structure
 
-```bash
-npm run generate
-```
+- **Backend**: Contains the Motoko code for the canister logic.
+- **Frontend**: Contains the React-based UI for interacting with the Todos DApp.
 
-at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
-
-If you are making frontend changes, you can start a development server with
-
-```bash
-npm start
-```
-
-Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
-
-### Note on frontend environment variables
-
-If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
-
-- set`DFX_NETWORK` to `ic` if you are using Webpack
-- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
-  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
-- Write your own `createActor` constructor
+---
