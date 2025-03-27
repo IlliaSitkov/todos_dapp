@@ -5,16 +5,18 @@ import styled from "styled-components";
 import { LinkStyled } from "../styles/shared";
 
 const CategoryCard = styled.div`
-  background-color: rgb(211, 211, 211);
-  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+
+  border-radius: 4px;
+  background-color: rgba(169, 169, 169, 0.11);
+  box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.15);
+  padding: 16px;
 
   &:hover {
-    background-color: rgb(191, 191, 191);
+    background-color: rgb(231, 231, 231);
   }
 `;
 
