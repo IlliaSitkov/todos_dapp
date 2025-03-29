@@ -1,12 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+
+const Logo = styled.div`
+  font-weight: 900;
+  font-size: 24px;
+`;
 
 const HeaderComponent = () => {
   return (
-    <div
-      className="d-flex gap-3 justify-content-center flex-wrap
-      justify-content-md-end pt-4 pb-4 ps-5 pe-5 align-items-center"
-    >
+    <div className="d-flex gap-3 justify-content-between py-4 px-5 align-items-center">
+      <Logo>Todos DApp</Logo>
       <Link className="btn btn-primary" to="/">
         Categories
       </Link>
