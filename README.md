@@ -109,6 +109,11 @@ A demo of the app: [https://youtu.be/Jn3a_t3ifU8](https://youtu.be/Jn3a_t3ifU8)
 
 ---
 
+## Built with
+- **React**: frontend
+- **Motoko**: backend
+---
+
 ## How to Run the Application
 
 ### Prerequisites
