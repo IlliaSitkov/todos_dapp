@@ -1,5 +1,9 @@
 The **ToDos DApp** is a decentralized application built on the Internet Computer (ICP) blockchain. It allows users to manage their tasks and categories in a secure and decentralized manner. Each user has their own set of categories and todos, which are stored securely on the blockchain and associated with their unique principal ID.
 
+The app can be accessed via this link [https://cft6s-gyaaa-aaaai-q3wbq-cai.icp0.io/](https://cft6s-gyaaa-aaaai-q3wbq-cai.icp0.io/)
+\
+A demo of the app: [https://youtu.be/Jn3a_t3ifU8](https://youtu.be/Jn3a_t3ifU8)
+
 ## Features
 
 - **User Authentication**: Each user is identified by their unique `Principal` ID.
